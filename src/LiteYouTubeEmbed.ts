@@ -100,6 +100,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    autoplay: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     thumbnail: {
       type: String,
       required: false,
@@ -134,6 +139,7 @@ export default defineComponent({
     const videoId = computed(() => encodeURIComponent(props.id))
     const paramsImp = computed(() => `&${props.params}` || '')
     const mutedImp = computed(() => props.muted ? '&mute=1' : '')
+    const autoplayImp = computed(() => props.autoplay ? '&autoplay=1' : '')
     const format = computed(() => props.webp ? 'webp' : 'jpg')
     const vi = computed(() => props.webp ? 'vi_webp' : 'vi')
     const videoPlaylistCoverId = computed(() => typeof props.playlistCoverId === 'string' ? encodeURIComponent(props.playlistCoverId) : null)
@@ -148,8 +154,8 @@ export default defineComponent({
       ? 'https://www.youtube.com'
       : 'https://www.youtube-nocookie.com')
     const iframeSrc = computed(() => !props.playlist
-      ? `${ytUrl.value}/embed/${videoId.value}?autoplay=1&enablejsapi=1&state=1${mutedImp.value}${paramsImp.value}`
-      : `${ytUrl.value}/embed/videoseries?autoplay=1&enablejsapi=1&list=${videoId.value}${mutedImp.value}${paramsImp.value}`)
+      ? `${ytUrl.value}/embed/${videoId.value}?${autoplayImp.value}&enablejsapi=1&state=1${mutedImp.value}${paramsImp.value}`
+      : `${ytUrl.value}/embed/videoseries?${autoplayImp.value}&enablejsapi=1&list=${videoId.value}${mutedImp.value}${paramsImp.value}`)
 
     function addIframe() {
       if (iframe.value)
